@@ -1,0 +1,1 @@
+g++ i2ctest.cpp -lwiringPi -lpthread -lrt -lcrypt -o i2ctest
