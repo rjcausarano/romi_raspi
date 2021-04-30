@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.1.0)
 project(romi_driver)
+
+## Packages that this one depends on
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  rospy
   std_msgs
 )
 
-## Declare a catkin package
+## Packages that depend on this one
 catkin_package(
 
 )
