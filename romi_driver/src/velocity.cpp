@@ -1,10 +1,12 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 
-#include <sstream>
+#include <wiringPiI2C.h>
+
+int fd = 0, address = 4, offset = 3;
 
 int get_rpm(){
-  return 245;
+  return wiringPiI2CReadReg8(fd, offset);;
 }
 
 int main(int argc, char **argv)
@@ -17,6 +19,8 @@ int main(int argc, char **argv)
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
   ros::Rate loop_rate(10);
+
+  fd = wiringPiI2CSetup(address);
 
   int count = 0;
   while (ros::ok())

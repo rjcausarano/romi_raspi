@@ -26,7 +26,12 @@ include_directories(
 )
 
 add_executable(velocity src/velocity.cpp)
-target_link_libraries(velocity ${catkin_LIBRARIES})
+target_link_libraries(
+  velocity 
+  ${catkin_LIBRARIES}
+  wiringPi
+  rt
+)
 add_dependencies(velocity romi_driver_generate_messages_cpp)
 
 add_executable(listener src/listener.cpp)
