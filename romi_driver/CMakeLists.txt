@@ -4,15 +4,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  genmsg
 )
-
-## Declare ROS messages and services
-add_message_files(FILES Num.msg)
-add_service_files(FILES AddTwoInts.srv)
-
-## Generate added messages and services
-generate_messages(DEPENDENCIES std_msgs)
 
 ## Declare a catkin package
 catkin_package(
@@ -32,8 +24,9 @@ target_link_libraries(
   wiringPi
   rt
 )
-add_dependencies(read_velocity romi_driver_generate_messages_cpp)
 
 add_executable(write_velocity src/write_velocity.cpp)
-target_link_libraries(write_velocity ${catkin_LIBRARIES})
-add_dependencies(write_velocity romi_driver_generate_messages_cpp)
+target_link_libraries(
+  write_velocity 
+  ${catkin_LIBRARIES}
+)
