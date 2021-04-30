@@ -25,15 +25,15 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(velocity src/velocity.cpp)
+add_executable(read_velocity src/read_velocity.cpp)
 target_link_libraries(
-  velocity 
+  read_velocity 
   ${catkin_LIBRARIES}
   wiringPi
   rt
 )
-add_dependencies(velocity romi_driver_generate_messages_cpp)
+add_dependencies(read_velocity romi_driver_generate_messages_cpp)
 
-add_executable(listener src/listener.cpp)
-target_link_libraries(listener ${catkin_LIBRARIES})
-add_dependencies(listener romi_driver_generate_messages_cpp)
+add_executable(write_velocity src/write_velocity.cpp)
+target_link_libraries(write_velocity ${catkin_LIBRARIES})
+add_dependencies(write_velocity romi_driver_generate_messages_cpp)
