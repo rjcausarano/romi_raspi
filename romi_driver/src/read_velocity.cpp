@@ -6,7 +6,7 @@
 int fd = 0, address = 4, offset = 3;
 
 int get_rpm(){
-  return wiringPiI2CReadReg16(fd, offset);;
+  return wiringPiI2CReadReg16(fd, offset);
 }
 
 int main(int argc, char **argv)
