@@ -6,7 +6,7 @@
 int fd = 0, address = 4, offset = 3;
 
 int get_rpm(){
-  return wiringPiI2CReadReg8(fd, offset);;
+  return wiringPiI2CReadReg16(fd, offset);;
 }
 
 int main(int argc, char **argv)
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << get_rpm() << " rpm";
+    ss << get_rpm() << " counts";
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
