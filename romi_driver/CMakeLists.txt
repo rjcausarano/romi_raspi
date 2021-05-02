@@ -18,16 +18,16 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(read_velocity src/read_velocity.cpp)
+add_executable(read_left_wheel_velocity src/read_left_wheel_velocity.cpp)
 target_link_libraries(
-  read_velocity 
+  read_left_wheel_velocity 
   ${catkin_LIBRARIES}
   wiringPi
   rt
 )
 
-add_executable(write_velocity src/write_velocity.cpp)
+add_executable(write_left_wheel_velocity src/write_left_wheel_velocity.cpp)
 target_link_libraries(
-  write_velocity 
+  write_left_wheel_velocity 
   ${catkin_LIBRARIES}
 )

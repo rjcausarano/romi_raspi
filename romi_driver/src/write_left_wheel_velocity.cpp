@@ -11,7 +11,7 @@ void commandVelCB(const geometry_msgs::Twist::ConstPtr& msg)
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "motors_node");
+  ros::init(argc, argv, "left_motor_vel_node");
   ros::NodeHandle n;
   ros::Subscriber sub = n.subscribe("/cmd_vel", 1000, commandVelCB);
 
