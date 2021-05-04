@@ -5,5 +5,4 @@ wheel_axis_length: 0.141
 # Gear Motor
 gear_motor_reduction: 120
 # Encoder
-encoder_counts_per_rev: 360
-encoder_counts_period: 0.00408
+encoder_counts_per_rev: 1440

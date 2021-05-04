@@ -13,6 +13,7 @@ int main()
    wheel_dir_offset = 2;
 
    std::cout << "I2C setup successful"<< fd << std::endl;
+   // 1:forward | 0: backward
    wiringPiI2CWriteReg8(fd, wheel_dir_offset, 1);
 
    while(true){

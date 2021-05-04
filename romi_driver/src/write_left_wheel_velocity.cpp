@@ -1,21 +1,22 @@
 #include "ros/ros.h"
-#include "geometry_msgs/Twist.h"
+#include "std_msgs/Float32.h"
 #include <iostream>
-
-void commandVelCB(const geometry_msgs::Twist::ConstPtr& msg)
-{
-  std::cout << "linear x: " << msg->linear.x << std::endl;
-  std::cout << "linear y: " << msg->linear.y << std::endl;
-  std::cout << "linear z: " << msg->linear.z << std::endl;
-}
 
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "left_motor_vel_node");
   ros::NodeHandle n;
-  ros::Subscriber sub = n.subscribe("/cmd_vel", 1000, commandVelCB);
+  ros::Publisher pub = n.advertise<std_msgs::Float32>("/left_wheel_pid", 1000);
+  float desired_ang_vel_ = 0;
 
-  ros::spin();
+  while(true){
+    std::cout << "Desired angular velocity: " << std::endl;
+    std::cin >> desired_ang_vel_;
+    std_msgs::Float32 msg;
+    msg.data = desired_ang_vel_;
+    pub.publish(msg);
+    ros::spinOnce();
+  }
 
   return 0;
 }

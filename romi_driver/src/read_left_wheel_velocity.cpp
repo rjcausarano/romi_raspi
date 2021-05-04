@@ -1,18 +1,23 @@
 #include "ros/ros.h"
-#include "std_msgs/String.h"
+#include "std_msgs/Float32.h"
 #include <wiringPiI2C.h>
 #include <math.h>
 
-int fd = 0, address = 4, offset = 3;
+int fd = 0, address = 4, dir_offset = 2, vel_offset = 3;
+int pub_rate = 5, counts_per_rev = 1440;
 
 int get_angular_vel(){
-  return wiringPiI2CReadReg16(fd, offset);
+  return (wiringPiI2CReadReg16(fd, vel_offset) / 4) * pub_rate;
+}
+
+int get_wheel_direction(){
+  return wiringPiI2CReadReg8(fd, dir_offset);
 }
 
 float degrees_to_radians(int deg){
-  std::cout << "Value of Pi: " << M_PI << std::endl;
   return deg * M_PI / 180;
 }
+
 
 int main(int argc, char **argv)
 {
@@ -21,31 +26,29 @@ int main(int argc, char **argv)
 
   ros::NodeHandle n;
 
-  ros::Publisher chatter_pub = n.advertise<std_msgs::String>("/left_wheel_vel", 1000);
+  ros::Publisher left_vel_pub = n.advertise<std_msgs::Float32>("/left_wheel_vel", 1000);
 
-  ros::Rate loop_rate(1);
+  ros::Rate loop_rate(pub_rate);
 
   fd = wiringPiI2CSetup(address);
 
   while (ros::ok())
   {
-    std_msgs::String msg;
+    std_msgs::Float32 msg;
 
-    std::stringstream ss;
     int deg_ps = get_angular_vel();
+    // int direction = get_wheel_direction();
     float rad_ps = degrees_to_radians(deg_ps);
-    ss << "Deg/s: " << deg_ps << " Rad/s: " << rad_ps;
-    msg.data = ss.str();
+    msg.data = rad_ps;
 
-    ROS_INFO("%s", msg.data.c_str());
+    std::cout << "Deg/s: " << deg_ps << " Rad/s: " << rad_ps << std::endl;
 
-    chatter_pub.publish(msg);
+    left_vel_pub.publish(msg);
 
     ros::spinOnce();
 
     loop_rate.sleep();
   }
-
 
   return 0;
 }
