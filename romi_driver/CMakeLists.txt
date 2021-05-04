@@ -36,4 +36,6 @@ add_executable(left_wheel_velocity_pid src/left_wheel_velocity_pid.cpp)
 target_link_libraries(
   left_wheel_velocity_pid
   ${catkin_LIBRARIES}
+  wiringPi
+  rt
 )
