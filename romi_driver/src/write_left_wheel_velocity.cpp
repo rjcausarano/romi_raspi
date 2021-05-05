@@ -9,14 +9,11 @@ int main(int argc, char **argv)
   ros::Publisher pub = n.advertise<std_msgs::Float32>("/left_wheel_pid", 1000);
   float desired_ang_vel_ = 0;
 
-  while(true){
-    std::cout << "Desired angular velocity: " << std::endl;
-    std::cin >> desired_ang_vel_;
-    std_msgs::Float32 msg;
-    msg.data = desired_ang_vel_;
-    pub.publish(msg);
-    ros::spinOnce();
-  }
+  std::cout << "Desired angular velocity: " << std::endl;
+  std::cin >> desired_ang_vel_;
+  std_msgs::Float32 msg;
+  msg.data = desired_ang_vel_;
+  pub.publish(msg);
 
   return 0;
 }

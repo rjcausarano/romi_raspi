@@ -2,19 +2,24 @@
 #include "std_msgs/Float32.h"
 #include <wiringPiI2C.h>
 #include <math.h>
+#include <chrono>
 
 int fd = 0, address = 4, dir_offset = 2, vel_offset = 3;
-int pub_rate = 5, counts_per_rev = 1440;
+int pub_rate = 10, counts_per_rev = 1440;
+std::chrono::steady_clock::time_point last_time = std::chrono::steady_clock::now();
 
-int get_angular_vel(){
-  return (wiringPiI2CReadReg16(fd, vel_offset) / 4) * pub_rate;
+float get_angular_vel(){
+  std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+  float time_elapsed = std::chrono::duration<float>(now - last_time).count();
+  last_time = now;
+  return ((float) wiringPiI2CReadReg16(fd, vel_offset) / 4) / time_elapsed;
 }
 
 int get_wheel_direction(){
   return wiringPiI2CReadReg8(fd, dir_offset);
 }
 
-float degrees_to_radians(int deg){
+float degrees_to_radians(float deg){
   return deg * M_PI / 180;
 }
 
@@ -36,7 +41,7 @@ int main(int argc, char **argv)
   {
     std_msgs::Float32 msg;
 
-    int deg_ps = get_angular_vel();
+    float deg_ps = get_angular_vel();
     // int direction = get_wheel_direction();
     float rad_ps = degrees_to_radians(deg_ps);
     msg.data = rad_ps;
