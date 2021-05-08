@@ -4,6 +4,9 @@
 #include <wiringPiI2C.h>
 #include <mutex>
 #include <cstdlib>
+#include <wiringPi.h>
+
+#define RST_PIN 7
 
 float desired_ang_vel_ = 0, wheel_radius_ = 0.036F, error_sum = 0, last_error = 0;
 int address = 3, P_ = 25, I_ = 30, D_ = 1, fd_ = 0, pwm_pid_offset_ = 6, motor_offset_ = 0, wheel_dir_offset_ = 2;
@@ -52,12 +55,21 @@ void pidVelCB(const std_msgs::Float32::ConstPtr& msg){
 
 int main(int argc, char **argv)
 {
+  // Set reset to high
+  wiringPiSetup();
+  pinMode(RST_PIN, OUTPUT);
+  digitalWrite(RST_PIN, HIGH);
+
   fd_ = wiringPiI2CSetup(address);
+
+  std::cout << "i2c fd: " << fd_ << std::endl;
   // turn on motor and set to move forward
   // Enable motor, 1 to enable, 0 to disable
   wiringPiI2CWriteReg8(fd_, motor_offset_, 1);
+  std::cout << "Motor enabled" << std::endl;
   // 1:forward | 0: backward
   wiringPiI2CWriteReg8(fd_, wheel_dir_offset_, 1);
+  std::cout << "Going forward" << std::endl;
   ros::init(argc, argv, "pid_node");
   ros::NodeHandle n;
   ros::Subscriber vel_sub = n.subscribe("/left_wheel_vel", 1000, currentVelCB);
