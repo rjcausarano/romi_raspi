@@ -53,11 +53,15 @@ void pidVelCB(const std_msgs::Float32::ConstPtr& msg){
 int main(int argc, char **argv)
 {
   fd_ = wiringPiI2CSetup(0x4);
+
+  std::cout << "i2c fd: " << fd_ << std::endl;
   // turn on motor and set to move forward
   // Enable motor, 1 to enable, 0 to disable
   wiringPiI2CWriteReg8(fd_, motor_offset_, 1);
+  std::cout << "Motor enabled" << std::endl;
   // 1:forward | 0: backward
   wiringPiI2CWriteReg8(fd_, wheel_dir_offset_, 1);
+  std::cout << "Going forward" << std::endl;
   ros::init(argc, argv, "pid_node");
   ros::NodeHandle n;
   ros::Subscriber vel_sub = n.subscribe("/left_wheel_vel", 1000, currentVelCB);
