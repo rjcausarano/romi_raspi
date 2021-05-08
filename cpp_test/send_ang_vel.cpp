@@ -5,9 +5,9 @@
 int main()
 {
    // speed offset is 6, motor offset is 0
-   int fd = 0, ang_vel = 0, speed_offset = 6, motor_offset = 0, wheel_dir_offset = 2;
+   int fd = 0, address = 3, ang_vel = 0, speed_offset = 6, motor_offset = 0, wheel_dir_offset = 2;
 
-   fd = wiringPiI2CSetup(0x4);
+   fd = wiringPiI2CSetup(address);
 
    std::cout << "I2C setup successful"<< fd << std::endl;
    // 1:forward | 0: backward

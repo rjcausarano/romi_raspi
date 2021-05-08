@@ -4,9 +4,9 @@
 
 int main()
 {
-   int fd = 0, pwm_percent = 0, pwm_offset = 0, motor_offset = 0, wheel_dir_offset = 0;;
+   int fd = 0, address = 3, pwm_percent = 0, pwm_offset = 0, motor_offset = 0, wheel_dir_offset = 0;;
 
-   fd = wiringPiI2CSetup(0x4);
+   fd = wiringPiI2CSetup(address);
    // PWM offset is 1, motor offset is 0
    motor_offset = 0;
    pwm_offset = 1;

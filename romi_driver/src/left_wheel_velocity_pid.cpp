@@ -6,7 +6,7 @@
 #include <cstdlib>
 
 float desired_ang_vel_ = 0, wheel_radius_ = 0.036F, error_sum = 0, last_error = 0;
-int P_ = 25, I_ = 30, D_ = 1, fd_ = 0, pwm_pid_offset_ = 6, motor_offset_ = 0, wheel_dir_offset_ = 2;
+int address = 3, P_ = 25, I_ = 30, D_ = 1, fd_ = 0, pwm_pid_offset_ = 6, motor_offset_ = 0, wheel_dir_offset_ = 2;
 std::mutex mutex_;
 
 void do_pid(float current, float desired){
@@ -52,7 +52,7 @@ void pidVelCB(const std_msgs::Float32::ConstPtr& msg){
 
 int main(int argc, char **argv)
 {
-  fd_ = wiringPiI2CSetup(0x4);
+  fd_ = wiringPiI2CSetup(address);
   // turn on motor and set to move forward
   // Enable motor, 1 to enable, 0 to disable
   wiringPiI2CWriteReg8(fd_, motor_offset_, 1);

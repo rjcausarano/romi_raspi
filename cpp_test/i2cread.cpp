@@ -4,9 +4,9 @@
 
 int main()
 {
-   int fd, result, offset;
+   int fd, address = 3, offset;
 
-   fd = wiringPiI2CSetup(0x4);
+   fd = wiringPiI2CSetup(address);
    // encoder low byte is offset 3
    offset = 3;
 

@@ -4,7 +4,7 @@
 #include <math.h>
 #include <chrono>
 
-int fd = 0, address = 4, dir_offset = 2, vel_offset = 3;
+int fd = 0, address = 3, dir_offset = 2, vel_offset = 3;
 int pub_rate = 10, counts_per_rev = 1440;
 std::chrono::steady_clock::time_point last_time = std::chrono::steady_clock::now();
 
