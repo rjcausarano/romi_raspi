@@ -70,7 +70,7 @@ int main(int argc, char **argv)
   // 1:forward | 0: backward
   wiringPiI2CWriteReg8(fd_, wheel_dir_offset_, 1);
   std::cout << "Going forward" << std::endl;
-  ros::init(argc, argv, "pid_node");
+  ros::init(argc, argv, "left_wheel_pid_node");
   ros::NodeHandle n;
   ros::Subscriber vel_sub = n.subscribe("/left_wheel_vel", 1000, currentVelCB);
   ros::Subscriber pid_sub = n.subscribe("/left_wheel_pid", 1000, pidVelCB);
