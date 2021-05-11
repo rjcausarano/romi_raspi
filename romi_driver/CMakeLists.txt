@@ -39,3 +39,25 @@ target_link_libraries(
   wiringPi
   rt
 )
+
+add_executable(read_right_wheel_velocity src/read_right_wheel_velocity.cpp)
+target_link_libraries(
+  read_right_wheel_velocity 
+  ${catkin_LIBRARIES}
+  wiringPi
+  rt
+)
+
+add_executable(write_right_wheel_velocity src/write_right_wheel_velocity.cpp)
+target_link_libraries(
+  write_right_wheel_velocity 
+  ${catkin_LIBRARIES}
+)
+
+add_executable(right_wheel_velocity_pid src/right_wheel_velocity_pid.cpp)
+target_link_libraries(
+  right_wheel_velocity_pid
+  ${catkin_LIBRARIES}
+  wiringPi
+  rt
+)

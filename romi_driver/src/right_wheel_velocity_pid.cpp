@@ -9,7 +9,7 @@
 #define RST_PIN 7
 
 float desired_ang_vel_ = 0, wheel_radius_ = 0.036F, error_sum = 0, last_error = 0;
-int address = 4, P_ = 25, I_ = 30, D_ = 1, fd_ = 0, pwm_pid_offset_ = 6, motor_offset_ = 0, wheel_dir_offset_ = 2;
+int address = 3, P_ = 25, I_ = 30, D_ = 1, fd_ = 0, pwm_pid_offset_ = 6, motor_offset_ = 0, wheel_dir_offset_ = 2;
 std::mutex mutex_;
 
 void do_pid(float current, float desired){
@@ -72,8 +72,8 @@ int main(int argc, char **argv)
   std::cout << "Going forward" << std::endl;
   ros::init(argc, argv, "pid_node");
   ros::NodeHandle n;
-  ros::Subscriber vel_sub = n.subscribe("/left_wheel_vel", 1000, currentVelCB);
-  ros::Subscriber pid_sub = n.subscribe("/left_wheel_pid", 1000, pidVelCB);
+  ros::Subscriber vel_sub = n.subscribe("/right_wheel_vel", 1000, currentVelCB);
+  ros::Subscriber pid_sub = n.subscribe("/right_wheel_pid", 1000, pidVelCB);
   ros::spin();
 
   return 0;
