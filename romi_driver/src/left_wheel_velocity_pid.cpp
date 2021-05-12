@@ -11,6 +11,7 @@
 float desired_ang_vel_ = 0, wheel_radius_ = 0.036F, error_sum = 0, last_error = 0;
 int address = 4, P_ = 25, I_ = 30, D_ = 1, fd_ = 0, pwm_pid_offset_ = 6, motor_offset_ = 0, wheel_dir_offset_ = 2;
 std::mutex mutex_;
+bool forward = true;
 
 void do_pid(float current, float desired){
   float error = desired - current;
@@ -44,7 +45,16 @@ void currentVelCB(const std_msgs::Float32::ConstPtr& msg)
     std::cout << "Angular velocity: " << current_ang_vel << " Rad/s" << std::endl;
     std::cout << "Linear velocity: " << current_ang_vel * wheel_radius_ << " m/s" << std::endl;
     std::lock_guard<std::mutex> lock(mutex_);
-    do_pid(current_ang_vel, desired_ang_vel_);
+    if(desired_ang_vel_ > 0 && forward == false){
+      // let's go forward
+      wiringPiI2CWriteReg8(fd_, wheel_dir_offset_, 1);
+      forward = true;
+    } else if(desired_ang_vel_ < 0 && forward == true){
+      // let's go backwards
+      wiringPiI2CWriteReg8(fd_, wheel_dir_offset_, 0);
+      forward = false;
+    }
+    do_pid(current_ang_vel, abs(desired_ang_vel_));
   }
 }
 
