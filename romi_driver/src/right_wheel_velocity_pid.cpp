@@ -1,5 +1,6 @@
 #include "ros/ros.h"
 #include "std_msgs/Float32.h"
+#include "std_msgs/Int32.h"
 #include <iostream>
 #include <wiringPiI2C.h>
 #include <mutex>
@@ -48,9 +49,13 @@ void currentVelCB(const std_msgs::Float32::ConstPtr& msg)
   }
 }
 
-void pidVelCB(const std_msgs::Float32::ConstPtr& msg){
+float get_angular_vel(int ticks_ps){
+  return (float) (ticks_ps / 4);
+}
+
+void pidVelCB(const std_msgs::Int32::ConstPtr& msg){
   std::lock_guard<std::mutex> lock(mutex_);
-  desired_ang_vel_ = msg->data;
+  desired_ang_vel_ = get_angular_vel(msg->data);
 }
 
 int main(int argc, char **argv)
@@ -73,7 +78,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "right_wheel_pid_node");
   ros::NodeHandle n;
   ros::Subscriber vel_sub = n.subscribe("/right_wheel_vel", 1000, currentVelCB);
-  ros::Subscriber pid_sub = n.subscribe("/right_wheel_pid", 1000, pidVelCB);
+  ros::Subscriber pid_sub = n.subscribe("/lwheel_desired_rate", 1000, pidVelCB);
   ros::spin();
 
   return 0;
