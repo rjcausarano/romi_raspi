@@ -17,13 +17,10 @@ void cmdVelCB(const geometry_msgs::Twist::ConstPtr& twist_msg){
   float right_linear = vel, left_linear = vel;
   // Then apply angular
   float ang = twist_msg->angular.z;
-  if(ang > 0){
-    right_linear += ang * wheel_dist_half;
-    left_linear -= ang * wheel_dist_half; 
-  } else {
-    right_linear -= ang * wheel_dist_half;
-    left_linear += ang * wheel_dist_half; 
-  }
+
+  right_linear -= ang * wheel_dist_half;
+  left_linear += ang * wheel_dist_half; 
+
 
   right_msg.data = right_linear / wheel_radius;
   left_msg.data = left_linear / wheel_radius;
