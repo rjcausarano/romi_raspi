@@ -1,6 +1,5 @@
 #include "ros/ros.h"
 #include "std_msgs/Float32.h"
-#include "std_msgs/Int32.h"
 #include <iostream>
 #include <wiringPiI2C.h>
 #include <mutex>
@@ -53,9 +52,9 @@ float get_angular_vel(int ticks_ps){
   return (float) (ticks_ps / 4);
 }
 
-void pidVelCB(const std_msgs::Int32::ConstPtr& msg){
+void pidVelCB(const std_msgs::Float32::ConstPtr& msg){
   std::lock_guard<std::mutex> lock(mutex_);
-  desired_ang_vel_ = get_angular_vel(msg->data);
+  desired_ang_vel_ = msg->data;
 }
 
 int main(int argc, char **argv)

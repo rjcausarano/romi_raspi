@@ -26,12 +26,6 @@ target_link_libraries(
   rt
 )
 
-add_executable(write_left_wheel_velocity src/write_left_wheel_velocity.cpp)
-target_link_libraries(
-  write_left_wheel_velocity 
-  ${catkin_LIBRARIES}
-)
-
 add_executable(left_wheel_velocity_pid src/left_wheel_velocity_pid.cpp)
 target_link_libraries(
   left_wheel_velocity_pid
@@ -48,9 +42,9 @@ target_link_libraries(
   rt
 )
 
-add_executable(write_right_wheel_velocity src/write_right_wheel_velocity.cpp)
+add_executable(wheel_velocities src/wheel_velocities.cpp)
 target_link_libraries(
-  write_right_wheel_velocity 
+  wheel_velocities
   ${catkin_LIBRARIES}
 )
 
