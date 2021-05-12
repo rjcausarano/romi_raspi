@@ -18,25 +18,17 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(read_left_wheel_velocity src/read_left_wheel_velocity.cpp)
+add_executable(read_wheel_velocities src/read_wheel_velocities.cpp)
 target_link_libraries(
-  read_left_wheel_velocity 
+  read_wheel_velocities
   ${catkin_LIBRARIES}
   wiringPi
   rt
 )
 
-add_executable(left_wheel_velocity_pid src/left_wheel_velocity_pid.cpp)
+add_executable(wheel_velocities_pid src/wheel_velocities_pid.cpp)
 target_link_libraries(
-  left_wheel_velocity_pid
-  ${catkin_LIBRARIES}
-  wiringPi
-  rt
-)
-
-add_executable(read_right_wheel_velocity src/read_right_wheel_velocity.cpp)
-target_link_libraries(
-  read_right_wheel_velocity 
+  wheel_velocities_pid
   ${catkin_LIBRARIES}
   wiringPi
   rt
@@ -46,12 +38,4 @@ add_executable(wheel_velocities src/wheel_velocities.cpp)
 target_link_libraries(
   wheel_velocities
   ${catkin_LIBRARIES}
-)
-
-add_executable(right_wheel_velocity_pid src/right_wheel_velocity_pid.cpp)
-target_link_libraries(
-  right_wheel_velocity_pid
-  ${catkin_LIBRARIES}
-  wiringPi
-  rt
 )
