@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="stream" default="false"/>
+
+  <!-- Node to publish command velocities to wheels -->
+  <node pkg="romi_driver" type="wheel_velocities" name="$(anon wheel_velocities)" output="screen" />
+
+  <!-- Node that runs the Turtlebot3_teleop -->
+  <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="$(anon turtlebot3_teleop_key)" output="screen" />
+
+  <!-- Node that shows camera streaming -->
+  <group if="$(arg stream)">
+    <node pkg="romi_driver" type="view_stream" name="$(anon view_stream)" output="screen" />
+  </group>
+
+</launch>
