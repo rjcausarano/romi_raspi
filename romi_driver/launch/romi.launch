@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="stream" default="false"/>
+
+  <!-- Node to publish Wheels states -->
+  <node pkg="romi_driver" type="read_wheel_velocities" name="$(anon read_wheel_velocities)" output="screen" />
+
+  <!-- Node that applies PID to commanded velocities -->
+  <node pkg="romi_driver" type="wheel_velocities_pid" name="$(anon wheel_velocities_pid)" output="screen" />
+
+  <!-- Node that starts camera streaming -->
+  <group if="$(arg stream)">
+    <node pkg="romi_driver" type="stream_camera" name="$(anon stream_camera)" output="screen" />
+  </group>
+
+</launch>
