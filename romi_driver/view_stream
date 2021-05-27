@@ -1,3 +1,3 @@
 #! /usr/bin/bash
 
-ffplay -fflags nobuffer rtmp://apolo.local/live/stream
+ffplay -fflags nobuffer rtmp://rjcausarano.local/live/stream
